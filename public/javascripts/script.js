@@ -31,10 +31,10 @@ $(document).ready(function() {
     method: 'GET',
     url: 'https://api.github.com/repos/wyattjoh/simple-web/releases/latest',
   })
-  .then(function(data) {
-    $('#latest-release').text(data.tag_name);
-    $('#tarball-input').val(data.tarball_url);
-    $('#latest-release-notes').text('Latest stable release of Talk is ' + data.tag_name);
+  .then(function(release) {
+    $('#latest-release').text(release.tag_name);
+    $('#tarball-input').val(release.tarball_url);
+    $('#latest-release-notes').html('Latest stable release of Talk is <a href="' + release.html_url + '" target="_blank">' + release.tag_name + '</a>');
 
     $('#tag-spinner').fadeOut(function() {
       $('#deploy-button-gutter').fadeIn();

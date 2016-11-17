@@ -60,7 +60,7 @@
                 authenticate users, please provide your app details below in
                 order to attach this information to your Heroku installation. This
                 data is not saved in this installer.</p>
-                <p>If you don't have a Facebook App setup, please visit <a href="https://developers.facebook.com/docs/apps/register">https://developers.facebook.com/docs/apps/register</a>
+                <p>If you don't have a Facebook App setup, please visit <a target="_blank" href="https://developers.facebook.com/docs/apps/register">https://developers.facebook.com/docs/apps/register</a>
                 for instructions on how to create an App. Note that you don't
                 need a review as we don't use any extended permissions on
                 Facebook beyond login.</p>
@@ -74,16 +74,28 @@
                 <input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required name="facebookAppSecret" id="facebookAppSecret" type="text" class="validate">
                 <label for="facebookAppSecret">Facebook App Secret</label>
               </div>
-            </div>
-            <div id="tag-spinner">
-              <p>Loading latest release</p>
-              <div class="progress">
-                <div class="indeterminate"></div>
+              <div class="col s12">
+                <p>
+                  <input type="checkbox" id="test6" />
+                  <label for="test6">Allow The Coral Project to collect anonymous usage statistics</label>
+                  <a href="https://coralproject.net/" target="_blank">more info</a>
+                </p>
               </div>
             </div>
-            <div id="deploy-button-gutter">
-              <button type="submit" class="waves-effect waves-light btn" id="deploy-button">Deploy <span id="latest-release"></span> to Heroku</button><span id="latest-release-notes"></span>
+            <div class="row">
+              <div class="input-field col s12">
+                <div id="tag-spinner">
+                  <p>Loading latest release</p>
+                  <div class="progress">
+                    <div class="indeterminate"></div>
+                  </div>
+                </div>
+                <div id="deploy-button-gutter">
+                  <button type="submit" class="waves-effect waves-light btn" id="deploy-button">Deploy <span id="latest-release"></span> to Heroku</button><span id="latest-release-notes"></span>
+                </div>
+              </div>
             </div>
+
           </form>
         </div>
 

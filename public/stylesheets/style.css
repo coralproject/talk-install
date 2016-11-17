@@ -35,9 +35,14 @@ label:not(.active):after {
   background: #F3725B;
 }
 
-p > a {
+p > a, span > a {
   border-bottom: 2px dotted #f67150;
   color: #333;
   text-decoration: none;
   font-weight: bold;
+}
+
+.input-field > p {
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
 }
