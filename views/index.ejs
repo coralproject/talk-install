@@ -20,18 +20,16 @@
           <a href="#" class="brand-logo"><img src="/images/icon-coral-white.svg" width="24"> Talk Installer</a>
           <a href="#" data-activates="sidebar" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
+            <li><a href="https://coralproject.net/">The Coral Project</a></li>
             <% if (user) { %>
               <li><a href="/auth/logout">Sign out</a></li>
-            <% } else { %>
-
             <% } %>
           </ul>
           <ul class="side-nav" id="sidebar">
             <% if (user) { %>
               <li><a href="/auth/logout">Sign out</a></li>
-            <% } else { %>
-
             <% } %>
+            <li><a href="https://coralproject.net/">The Coral Project</a></li>
           </ul>
         </div>
       </div>
@@ -126,6 +124,17 @@
             </div>
           </div>
         </div>
+
+        <div id="delete-deployment-modal" class="modal">
+          <div class="modal-content">
+            <h4>Delete your deployment</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit nisi vitae ipsum aliquet pellentesque. Aenean convallis vehicula sagittis. Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
+          </div>
+          <div class="modal-footer">
+            <a id="delete-deployment-confirm" class="modal-action modal-close waves-effect waves-red btn-flat">Delete Deployment</a>
+            <a class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+          </div>
+        </div>
       <% } else { %>
         <p>Online comments are broken. Our Talk tool will reshape how moderation, comment display, and conversation function on your site, creating a safer, smarter discussion that’s open to all.</p>
         <p>You can deploy to the Heroku platform using this one click deploy button. This will create a free installation and provision Mongo and Redis for you on free plans that are available. There are some questionst that you need to answer though in order for us to deploy your application.</p>
@@ -136,8 +145,6 @@
     <script src="/javascripts/materialize.min.js" charset="utf-8"></script>
     <script src="/javascripts/jquery.validate.min.js" charset="utf-8"></script>
     <script src="/javascripts/jquery.maskedinput.min.js" charset="utf-8"></script>
-    <% if (user) { %>
     <script src="/javascripts/script.js" charset="utf-8"></script>
-    <% } %>
   </body>
 </html>
