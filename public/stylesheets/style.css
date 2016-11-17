@@ -1,12 +1,8 @@
-#deploy-progress {
-  display: none;
-}
-
-#deploy-progress p {
+#deploy-progress p, #tag-spinner > p {
   text-align: center;
 }
 
-#finish-installation, #deploy-button-gutter {
+#deploy-progress, #finish-installation, #deploy-button-gutter, #errors {
   display: none;
 }
 
@@ -26,10 +22,6 @@ label:not(.active):after {
   padding: 15px;
 }
 
-#errors {
-  display: none;
-}
-
 #latest-release-notes {
   margin-left: 15px;
   color: #b7b7b7;
@@ -43,6 +35,9 @@ label:not(.active):after {
   background: #F3725B;
 }
 
-#tag-spinner > p {
-  text-align: center;
+p > a {
+  border-bottom: 2px dotted #f67150;
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
 }
