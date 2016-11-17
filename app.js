@@ -42,6 +42,7 @@ const session_opts = {
 };
 
 if (app.get('env') === 'production') {
+  app.set('trust proxy', 1);
 
   // Enable the secure cookie when we are in production mode.
   session_opts.cookie.secure = true;
