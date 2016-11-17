@@ -39,6 +39,10 @@ label:not(.active):after {
   margin-bottom: 50px;
 }
 
+.coral-orange {
+  background: #F3725B;
+}
+
 #tag-spinner > p {
   text-align: center;
 }
