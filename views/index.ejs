@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Talk Installer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/materialize.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper row">
+        <div class="col s12">
+          <a href="#" class="brand-logo"><img src="/images/icon-coral-white.svg" width="24"> Talk Installer</a>
+          <a href="#" data-activates="sidebar" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <% if (user) { %>
+              <li><a href="/auth/logout">Sign out</a></li>
+            <% } else { %>
+
+            <% } %>
+          </ul>
+          <ul class="side-nav" id="sidebar">
+            <% if (user) { %>
+              <li><a href="/auth/logout">Sign out</a></li>
+            <% } else { %>
+
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div id="errors" class="row">
+        <div class="col s12">
+          <div class="card red darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">An error occured during deployment</span>
+              <pre class="error-content"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <% if (user) { %>
+        <div id="start-installation" class="row">
+          <h3 class="col s12">Deployment Settings</h3>
+          <form id="form" class="col s12">
+            <div class="row">
+              <div class="col s12">
+                <p>In order for your users to login, you need to provide
+                credentials for facebook. Talk uses the Facebook Login flow to
+                authenticate users, please provide your app details below in
+                order to attach this information to your Heroku installation. This
+                data is not saved in this installer.</p>
+                <p>If you don't have a Facebook App setup, please visit <a href="https://developers.facebook.com/docs/apps/register">https://developers.facebook.com/docs/apps/register</a>
+                for instructions on how to create an App. Note that you don't
+                need a review as we don't use any extended permissions on
+                Facebook beyond login.</p>
+              </div>
+              <input id="tarball-input" type="hidden" name="tarballUrl" value="" required>
+              <div class="input-field col s12">
+                <input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required name="facebookAppID" id="facebookAppID" type="text" class="validate">
+                <label for="facebookAppID">Facebook App ID</label>
+              </div>
+              <div class="input-field col s12">
+                <input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required name="facebookAppSecret" id="facebookAppSecret" type="text" class="validate">
+                <label for="facebookAppSecret">Facebook App Secret</label>
+              </div>
+            </div>
+            <div id="tag-spinner">
+              <p>Loading latest release</p>
+              <div class="progress">
+                <div class="indeterminate"></div>
+              </div>
+            </div>
+            <div id="deploy-button-gutter">
+              <button type="submit" class="waves-effect waves-light btn" id="deploy-button">Deploy <span id="latest-release"></span> to Heroku</button><span id="latest-release-notes"></span>
+            </div>
+          </form>
+        </div>
+
+        <div id="finish-installation">
+          <h3>Talk is now installed!</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit nisi vitae ipsum aliquet pellentesque. Aenean convallis vehicula sagittis. Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
+          <p>Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
+
+          <p>At this point you should also update your Facebook OAuth redirect
+          URI's to contain:</p>
+
+          <pre id="facebook-oauth-redirect"></pre>
+
+          <p>This will allow users to authenticate to your comments section via
+          Facebook.</p>
+
+          <a class="waves-effect waves-light btn" target="_blank" rel="noreferrer" id="finish-installation-button">Finish Installation</a>
+          <a class="red darken-1 waves-effect waves-light btn" id="delete-deployment">Delete Deployment</a>
+        </div>
+
+        <div id="deployment-modal" class="modal">
+          <div class="modal-content">
+            <div id="deploy-progress">
+              <p></p>
+              <div class="progress">
+                <div class="indeterminate"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } else { %>
+        <p>Online comments are broken. Our Talk tool will reshape how moderation, comment display, and conversation function on your site, creating a safer, smarter discussion that’s open to all.</p>
+        <p>You can deploy to the Heroku platform using this one click deploy button. This will create a free installation and provision Mongo and Redis for you on free plans that are available. There are some questionst that you need to answer though in order for us to deploy your application.</p>
+        <a class="waves-effect waves-light btn" href="/auth/heroku">Login with Heroku</a>
+      <% } %>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+    <script src="/javascripts/materialize.min.js" charset="utf-8"></script>
+    <script src="/javascripts/jquery.validate.min.js" charset="utf-8"></script>
+    <script src="/javascripts/jquery.maskedinput.min.js" charset="utf-8"></script>
+    <% if (user) { %>
+    <script src="/javascripts/script.js" charset="utf-8"></script>
+    <% } %>
+  </body>
+</html>

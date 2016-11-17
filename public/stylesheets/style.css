@@ -1,0 +1,44 @@
+#deploy-progress {
+  display: none;
+}
+
+#deploy-progress p {
+  text-align: center;
+}
+
+#finish-installation, #deploy-button-gutter {
+  display: none;
+}
+
+label:after {
+  transition-property: all !important;
+  font-size: 0.8rem;
+  transform: none;
+}
+
+label:not(.active):after {
+  transform: translateY(-140%);
+}
+
+#facebook-oauth-redirect {
+  border-radius: 2px;
+  background: #DFDFDF;
+  padding: 15px;
+}
+
+#errors {
+  display: none;
+}
+
+#latest-release-notes {
+  margin-left: 15px;
+  color: #b7b7b7;
+}
+
+.container {
+  margin-bottom: 50px;
+}
+
+#tag-spinner > p {
+  text-align: center;
+}

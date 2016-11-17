@@ -1,0 +1,26 @@
+{
+  "name": "talk-install",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "connect-redis": "^3.1.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "^2.2.0",
+    "ejs": "~2.5.2",
+    "express": "~4.14.0",
+    "express-session": "^1.14.2",
+    "heroku-client": "^3.0.0-beta3",
+    "morgan": "~1.7.0",
+    "passport": "^0.3.2",
+    "passport-heroku": "^1.0.0",
+    "serve-favicon": "~2.3.0",
+    "simple-encryptor": "^1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.10.2"
+  }
+}
