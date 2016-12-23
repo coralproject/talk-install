@@ -1,13 +1,8 @@
 ### Talk is now installed!
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit nisi vitae
-ipsum aliquet pellentesque. Aenean convallis vehicula sagittis. Nullam ac est
-eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec
-suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor
-tellus eu interdum.
+Talk uses emails to send forgotten password resets to users who request them. In
+order to support this, we have installed the Postmark add-on to configure this
+part for you.
 
-Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer
-mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit
-porttitor tellus eu interdum.
-
-You must activate emails by clicking the following:
+To send emails, you must provide an email address that we can send email's from
+on behalf of Talk. You can configure this by clicking the following:
