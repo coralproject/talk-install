@@ -48,6 +48,18 @@
         </div>
       </div>
 
+      <% errors.forEach((error) => { %>
+        <div class="row">
+          <div class="col s12">
+            <div class="card red darken-1">
+              <div class="card-content white-text">
+                <%- marked(error) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+
       <% if (user) { %>
         <div id="start-installation" class="row">
           <h3 class="col s12">Deployment Settings</h3>

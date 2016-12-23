@@ -10,6 +10,7 @@ const passport = require('./passport');
 const debug = require('debug')('talk-install:app');
 const RedisStore = require('connect-redis')(session);
 const redis = require('./redis');
+const flash = require('connect-flash');
 
 const index = require('./routes/index');
 
@@ -56,8 +57,15 @@ if (app.get('env') === 'production') {
 }
 
 app.use(session(session_opts));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use((req, res, next) => {
+  res.locals.errors = req.flash('error');
+
+  next();
+});
 
 // Auth callbacks.
 app.get('/auth/logout', (req, res) => {
@@ -68,7 +76,8 @@ app.get('/auth/logout', (req, res) => {
 app.get('/auth/heroku', passport.authenticate('heroku'));
 app.get('/auth/heroku/callback', passport.authenticate('heroku', {
   failureRedirect: '/',
-  successRedirect: '/'
+  successRedirect: '/',
+  failureFlash: true
 }));
 
 // Create the new renderer that overrides the link generation.
@@ -86,6 +95,11 @@ app.locals.md = (filename) => {
   let include = fs.readFileSync(path, 'utf8');
 
   return marked(include, {renderer});
+};
+
+// Render some text as markdown.
+app.locals.marked = (content) => {
+  return marked(content, {renderer});
 };
 
 app.use('/', index);

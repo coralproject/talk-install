@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+pre {
+  white-space: pre-wrap;
+}
+
 #deploy-progress, #finish-installation, #deploy-button-gutter, #errors, #finish-installation-post, #errors .error-detail, #deploy-progress pre {
   display: none;
 }
@@ -47,6 +51,11 @@ p > a, span > a {
   color: #333;
   text-decoration: none;
   font-weight: bold;
+}
+
+.red p > a {
+  border-bottom: 2px dotted #f67150;
+  color: white;
 }
 
 .input-field > p {
