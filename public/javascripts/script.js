@@ -21,6 +21,9 @@ var Store = {
   },
   set: function(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
+  },
+  clear: function() {
+    localStorage.clear();
   }
 };
 
@@ -273,7 +276,7 @@ function deleteDeployment(appSetup) {
   }).done(function() {
 
     // Purge the local installtion file...
-    Store.remove('installation');
+    Store.clear();
 
     location.reload();
   })
@@ -311,11 +314,19 @@ function finish(options) {
       return addon.addon_service.name === 'postmark';
     }).web_url);
 
-    $('#activate-email-button').on('click', function(e) {
-      $('#finish-installation-post').fadeIn();
-    });
-
     $('#finish-installation').fadeIn();
+
+    if (Store.get('email-setup')) {
+      $('#finish-installation-post').show();
+    } else {
+      $('#activate-email-button').on('click', function(e) {
+
+        // Mark that the email was setup.
+        Store.set('email-setup', true);
+
+        $('#finish-installation-post').fadeIn();
+      });
+    }
   });
 }
 
