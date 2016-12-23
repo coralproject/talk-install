@@ -17,7 +17,7 @@ passport.use(new HerokuStrategy({
 }, (accessToken, refreshToken, profile, done) => {
 
   if (!profile.heroku.verified) {
-    return done(null, false, {message: 'Account not verified, please see https://devcenter.heroku.com/categories/billing. Verify now at https://heroku.com/verify.'});
+    return done(null, false, {message: 'Your Heroku account is not verified, please see https://devcenter.heroku.com/categories/billing. Verify now at https://heroku.com/verify.'});
   }
 
   // Send back the access token, that's the only thing our user is made of.
