@@ -154,6 +154,8 @@ function tailDeploymentProgress(appSetup) {
   xhr.onprogress = function() {
     if (buildOutput === '') {
       pre.show();
+
+      updateProgress('Deployment in progress');
     }
 
     buildOutput += xhr.responseText;
@@ -182,9 +184,9 @@ function pollDeployment(appSetup, buildStarted) {
       }
 
       if (appSetup.status === 'pending') {
-        updateProgress('Deployment in progress');
 
         setTimeout(pollDeployment(appSetup, buildStarted), 3000);
+
       } else if (appSetup.status === 'succeeded') {
         updateProgress('Finishing deployment');
 
@@ -235,8 +237,6 @@ function finishDeployment(appSetup) {
     })
   }).done(function() {
 
-    updateProgress('Deployment success');
-
     fetchAddons(appSetup);
   })
   .fail(function(err) {
@@ -257,6 +257,8 @@ function fetchAddons(appSetup) {
       appSetup: appSetup,
       addons: addons
     };
+
+    updateProgress('Deployment success');
 
     // set the options to finish in localStorage.
     Store.set('installation', options);
@@ -291,7 +293,7 @@ function finish(options) {
 
   setTimeout(function() {
     $('#deployment-modal').modal('close');
-  }, 2000);
+  }, 1000);
 
   $('#delete-deployment').on('click', function(e) {
     e.preventDefault();
