@@ -42,6 +42,7 @@
             <div class="card-content white-text">
               <span class="card-title">An error occured during deployment</span>
               <pre class="error-content"></pre>
+              <pre class="error-detail"></pre>
             </div>
           </div>
         </div>
@@ -64,6 +65,7 @@
                 Facebook beyond login.</p>
               </div>
               <input id="tarball-input" type="hidden" name="tarballUrl" value="" required>
+              <input id="version-input" type="hidden" name="version" value="" required>
               <div class="input-field col s12">
                 <input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required name="facebookAppID" id="facebookAppID" type="text" class="validate">
                 <label for="facebookAppID">Facebook App ID</label>
@@ -102,16 +104,25 @@
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit nisi vitae ipsum aliquet pellentesque. Aenean convallis vehicula sagittis. Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
           <p>Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
 
-          <p>At this point you should also update your Facebook OAuth redirect
-          URI's to contain:</p>
+          <p>You must activate emails by clicking the following:</p>
 
-          <pre id="facebook-oauth-redirect"></pre>
+          <a class="waves-effect waves-light btn" target="_blank" rel="noreferrer" id="activate-email-button">Activate Email</a>
 
-          <p>This will allow users to authenticate to your comments section via
-          Facebook.</p>
+          <div id="finish-installation-post">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit nisi vitae ipsum aliquet pellentesque. Aenean convallis vehicula sagittis. Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
+            <p>Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
 
-          <a class="waves-effect waves-light btn" target="_blank" rel="noreferrer" id="finish-installation-button">Finish Installation</a>
-          <a class="red darken-1 waves-effect waves-light btn" id="delete-deployment">Delete Deployment</a>
+            <p>At this point you should also update your Facebook OAuth redirect
+            URI's to contain:</p>
+
+            <pre id="facebook-oauth-redirect"></pre>
+
+            <p>This will allow users to authenticate to your comments section via
+            Facebook.</p>
+
+            <a class="waves-effect waves-light btn" target="_blank" rel="noreferrer" id="finish-installation-button">Finish Installation</a>
+            <a class="red darken-1 waves-effect waves-light btn" id="delete-deployment">Delete Deployment</a>
+          </div>
         </div>
 
         <div id="deployment-modal" class="modal">
@@ -121,6 +132,7 @@
               <div class="progress">
                 <div class="indeterminate"></div>
               </div>
+              <pre></pre>
             </div>
           </div>
         </div>

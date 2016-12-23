@@ -2,8 +2,15 @@
   text-align: center;
 }
 
-#deploy-progress, #finish-installation, #deploy-button-gutter, #errors {
+#deploy-progress, #finish-installation, #deploy-button-gutter, #errors, #finish-installation-post, #errors .error-detail, #deploy-progress pre {
   display: none;
+}
+
+#deploy-progress pre {
+  max-height: 200px;
+  padding: 10px;
+  background: black;
+  color: white;
 }
 
 label:after {

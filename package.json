@@ -17,12 +17,14 @@
     "morgan": "~1.7.0",
     "passport": "^0.3.2",
     "passport-heroku": "^1.0.0",
+    "request": "^2.79.0",
     "serve-favicon": "~2.3.0",
     "simple-encryptor": "^1.1.0"
   },
   "devDependencies": {
     "eslint": "^3.10.2"
-  }, "engines": {
+  },
+  "engines": {
     "node": ">=7.0.0"
   }
 }
