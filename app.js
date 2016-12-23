@@ -4,7 +4,10 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const marked = require('marked');
+const fs = require('fs');
 const passport = require('./passport');
+const debug = require('debug')('talk-install:app');
 const RedisStore = require('connect-redis')(session);
 const redis = require('./redis');
 
@@ -67,6 +70,23 @@ app.get('/auth/heroku/callback', passport.authenticate('heroku', {
   failureRedirect: '/',
   successRedirect: '/'
 }));
+
+// Create the new renderer that overrides the link generation.
+const renderer = new marked.Renderer();
+renderer.link = (href, title, text) => {
+  return `<a target="_blank" href="${href}" title="${title}">${text}</a>`;
+};
+
+// Add the md local into the template.
+app.locals.md = (filename) => {
+  let path = `${__dirname}/views/docs/${filename}.md`;
+
+  debug(`Loading markdown template: views/docs/${filename}.md`);
+
+  let include = fs.readFileSync(path, 'utf8');
+
+  return marked(include, {renderer});
+};
 
 app.use('/', index);
 

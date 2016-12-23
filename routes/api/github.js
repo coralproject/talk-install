@@ -17,8 +17,6 @@ router.get('/releases/latest', (req, res) => {
 
       let releases = body;
 
-      console.log(body);
-
       // Send back the first pre-release
       res.json(releases.find((release) => release.prerelease));
     });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Talk Installer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -54,15 +54,7 @@
           <form id="form" class="col s12">
             <div class="row">
               <div class="col s12">
-                <p>In order for your users to login, you need to provide
-                credentials for facebook. Talk uses the Facebook Login flow to
-                authenticate users, please provide your app details below in
-                order to attach this information to your Heroku installation. This
-                data is not saved in this installer.</p>
-                <p>If you don't have a Facebook App setup, please visit <a target="_blank" href="https://developers.facebook.com/docs/apps/register">https://developers.facebook.com/docs/apps/register</a>
-                for instructions on how to create an App. Note that you don't
-                need a review as we don't use any extended permissions on
-                Facebook beyond login.</p>
+                <%- md('step-1') %>
               </div>
               <input id="tarball-input" type="hidden" name="tarballUrl" value="" required>
               <input id="version-input" type="hidden" name="version" value="" required>
@@ -100,26 +92,11 @@
         </div>
 
         <div id="finish-installation">
-          <h3>Talk is now installed!</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit nisi vitae ipsum aliquet pellentesque. Aenean convallis vehicula sagittis. Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
-          <p>Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
-
-          <p>You must activate emails by clicking the following:</p>
-
+          <%- md('step-2') %>
           <a class="waves-effect waves-light btn" target="_blank" rel="noreferrer" id="activate-email-button">Activate Email</a>
 
           <div id="finish-installation-post">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit nisi vitae ipsum aliquet pellentesque. Aenean convallis vehicula sagittis. Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
-            <p>Nullam ac est eget nibh egestas faucibus eget sollicitudin tellus. Integer mollis enim nec suscipit accumsan. Integer vitae aliquet justo. Integer suscipit porttitor tellus eu interdum.</p>
-
-            <p>At this point you should also update your Facebook OAuth redirect
-            URI's to contain:</p>
-
-            <pre id="facebook-oauth-redirect"></pre>
-
-            <p>This will allow users to authenticate to your comments section via
-            Facebook.</p>
-
+            <%- md('step-3') %>
             <a class="waves-effect waves-light btn" target="_blank" rel="noreferrer" id="finish-installation-button">Finish Installation</a>
             <a class="red darken-1 waves-effect waves-light btn" id="delete-deployment">Delete Deployment</a>
           </div>
@@ -148,12 +125,11 @@
           </div>
         </div>
       <% } else { %>
-        <p>Online comments are broken. Our Talk tool will reshape how moderation, comment display, and conversation function on your site, creating a safer, smarter discussion that’s open to all.</p>
-        <p>You can deploy to the Heroku platform using this one click deploy button. This will create a free installation and provision Mongo and Redis for you on free plans that are available. There are some questionst that you need to answer though in order for us to deploy your application.</p>
+        <%- md('intro') %>
         <a class="waves-effect waves-light btn" href="/auth/heroku">Login with Heroku</a>
       <% } %>
     </div>
-    <script src="/javascripts/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+    <script src="/javascripts/jquery.min.js" charset="utf-8"></script>
     <script src="/javascripts/jquery.validate.min.js" charset="utf-8"></script>
     <script src="/javascripts/jquery.maskedinput.min.js" charset="utf-8"></script>
     <script src="/javascripts/materialize.min.js" charset="utf-8"></script>
