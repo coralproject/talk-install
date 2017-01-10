@@ -85,7 +85,7 @@ function loadLatestRelease() {
     });
   })
   .fail(function(err) {
-    failed('Can\'t load the most recent release of Talk.');
+    failed('Can\'t load the most recent release of Talk. ('+err.status+')');
   });
 }
 
