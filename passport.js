@@ -1,6 +1,12 @@
 const passport = require('passport');
 const HerokuStrategy = require('passport-heroku').Strategy;
-const encryptor = require('simple-encryptor')(process.env.SESSION_SECRET);
+
+const SESSION_SECRET = process.env.SESSION_SECRET;
+if (!SESSION_SECRET) {
+  throw new Error("Please provide a SESSION_SECRET environment variable for encrypting serialized passport users")
+
+}
+const encryptor = require('simple-encryptor')(SESSION_SECRET);
 
 passport.serializeUser((user, done) => {
   done(null, encryptor.encrypt(user));
@@ -9,6 +15,10 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   done(null, encryptor.decrypt(user));
 });
+
+['HEROKU_OAUTH_ID', 'HEROKU_OAUTH_SECRET'].forEach(function (envVar) {
+  if (!process.env[envVar]) throw new Error("Please provide required environment variable "+envVar+". See README.")
+})
 
 passport.use(new HerokuStrategy({
   clientID: process.env.HEROKU_OAUTH_ID,
