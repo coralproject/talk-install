@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 
-const REPO = process.env.REPO;
+const REPO = process.env.REPO || 'coralproject/talk';
 if (!REPO) {
-  throw new Error("Please provide REPO environment variable, e.g. coralproject/talk")
+  throw new Error('Please provide REPO environment variable, e.g. coralproject/talk');
 }
 
 router.get('/releases/latest', (req, res) => {

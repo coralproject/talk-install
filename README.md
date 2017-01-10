@@ -10,11 +10,11 @@ Once you've created the Heroku Application, take note of its ID and Secret, as y
 
 ## Usage
 
-`npm start`
+```
+npm start
+```
 
-But you also need to provide a few environment variables. So your real usage will be like
-
-`HEROKU_OAUTH_ID=x HEROKU_OAUTH_SECRET=y REDIS_URL=z REPO=coralproject/talk REPO_PRERELEASE=true SESSION_SECRET=$(date |md5 | head -c16) npm start`
+Ensure that you provide environment variables as listed below.
 
 There is no stdout on successful start, but there will be logs once HTTP traffic starts. Remember to use DEBUG if you want more runtime info.
 
@@ -28,7 +28,22 @@ In your web browser, open http://localhost:3000 (or other PORT, if you configure
 | HEROKU_OAUTH_ID     | yes                     | Heroku Application ID (which is an OAuth Client ID). See [your existing applications in the Heroku Dashboard](https://dashboard.heroku.com/account/applications).                                                             |
 | HEROKU_OAUTH_SECRET | yes                     | Heroku Application Secret                                                                                                                                                                                                     |
 | PORT                | no                      | Which TCP port this app should listen on for HTTP requests. Defaults to 3000.                                                                                                                                                 |
-| REDIS_URL           | no                     | Where to find redis, which is used for user sessions. Defaults to redis://localhost:6379. If you don't have redis, but do have docker, you can run it with `docker run -p 6379:6379 redis`                                           |
-| REPO                | yes                     | What GitHub repo the installer should install. You probably want to set this to 'coralproject/talk'                                                                                                                           |
-| REPO_PRERELEASE     | no, but see description | Use prereleases. If 'true', the installer will install the most recent release at REPO, even if it's not tagged as 'latest'. Currently you must set this to 'true', presumably because coralproject/talk isn't full released. |
-| SESSION_SECRET      | yes                     | Key used to encrypt user information before storing sessions in Redis. Must be at least 16 characters long. For something random, use output of `date |md5 | head -c16; echo`                                                 |
+| REDIS_URL           | no                     | Where to find Redis, which is used for user sessions. Defaults to `redis://localhost:6379` |
+| REPO                | no                    | What GitHub repo the installer should install. Defaults to `coralproject/talk` |
+| REPO_PRERELEASE     | no | Allow the most recent release to be a pre-release. Defaults to `FALSE` |
+| SESSION_SECRET      | yes                     | Key used to encrypt user information before storing sessions in Redis. Must be at least 16 characters long |
+
+
+## License
+
+    Copyright 2016 Mozilla Foundation
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+    See the License for the specific language governing permissions and limitations under the License.
