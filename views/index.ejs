@@ -61,15 +61,67 @@
       <% }) %>
 
       <% if (user) { %>
+        <div id="select-mode" class="row">
+          <div class="center">
+            <a id="upgrade-existing-deployment-btn" class="waves-effect waves-light blue darken-1 btn-large">Upgrade an existing deployment</a>
+            <a id="create-new-deployment-btn" class="waves-effect waves-light btn-large">Create a new deployment</a>
+          </div>
+        </div>
+
+        <div id="start-upgrade" class="row">
+          <div class="col s12">
+            <div class="warning-message">
+              <h4>Potential Data Loss</h4>
+              <%- md('upgrade-warning') %>
+            </div>
+          </div>
+
+          <h3 class="col s12">Upgrade Deployment</h3>
+          <div class="col s12">
+            <%- md('upgrade-1') %>
+          </div>
+
+          <form class="col s12">
+            <input type="hidden" name="tarballUrl" value="" required>
+            <input type="hidden" name="version" value="" required>
+            <div class="row">
+              <div class="input-field col s12">
+                <input required name="app_name" type="text" id="heroku-apps-autocomplete" class="autocomplete">
+                <label>Select the Talk Heroku App</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <div class="tag-spinner">
+                  <p>Loading latest release</p>
+                  <div class="progress">
+                    <div class="indeterminate"></div>
+                  </div>
+                </div>
+                <div class="deploy-button-gutter">
+                  <button type="submit" class="waves-effect waves-light btn deploy-button">Upgrade to <span data-template-tag="latest-release"></span> on Heroku</button><span class="btn-notes" data-template-tag="latest-release-notes"></span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div id="upgrade-complete" class="row">
+          <h3 class="col s12">Deployment Upgraded</h3>
+          <div class="col s12">
+            <%- md('upgrade-2') %>
+          </div>
+        </div>
+
         <div id="start-installation" class="row">
-          <h3 class="col s12">Deployment Settings</h3>
+          <h3 class="col s12">New Deployment Settings</h3>
           <form id="form" class="col s12">
             <div class="row">
               <div class="col s12">
                 <%- md('step-1') %>
               </div>
-              <input id="tarball-input" type="hidden" name="tarballUrl" value="" required>
-              <input id="version-input" type="hidden" name="version" value="" required>
+              <input type="hidden" name="tarballUrl" value="" required>
+              <input type="hidden" name="version" value="" required>
               <div class="input-field col s12">
                 <input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required name="facebookAppID" id="facebookAppID" type="text" class="validate">
                 <label for="facebookAppID">Facebook App ID</label>
@@ -88,14 +140,14 @@
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <div id="tag-spinner">
+                <div class="tag-spinner">
                   <p>Loading latest release</p>
                   <div class="progress">
                     <div class="indeterminate"></div>
                   </div>
                 </div>
-                <div id="deploy-button-gutter">
-                  <button type="submit" class="waves-effect waves-light btn" id="deploy-button">Deploy <span id="latest-release"></span> to Heroku</button><span id="latest-release-notes"></span>
+                <div class="deploy-button-gutter">
+                  <button type="submit" class="waves-effect waves-light btn deploy-button">Deploy <span data-template-tag="latest-release"></span> to Heroku</button><span class="btn-notes" data-template-tag="latest-release-notes"></span>
                 </div>
               </div>
             </div>

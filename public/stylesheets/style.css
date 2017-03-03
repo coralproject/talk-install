@@ -6,7 +6,28 @@ pre {
   white-space: pre-wrap;
 }
 
-#deploy-progress, #finish-installation, #deploy-button-gutter, #errors, #finish-installation-post, #errors .error-detail, #deploy-progress pre {
+#select-mode {
+  margin-top: 25%;
+}
+
+.warning-message {
+  color: red;
+  background: rgba(255, 0, 0, 0.13);
+  border: 1px dashed red;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+#start-installation,
+#start-upgrade,
+#deploy-progress,
+#finish-installation,
+.deploy-button-gutter,
+#errors,
+#finish-installation-post,
+#errors .error-detail,
+#upgrade-complete,
+#deploy-progress pre {
   display: none;
 }
 
@@ -33,7 +54,7 @@ label:not(.active):after {
   padding: 15px;
 }
 
-#latest-release-notes {
+.btn-notes {
   margin-left: 15px;
   color: #b7b7b7;
 }

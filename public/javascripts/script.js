@@ -58,8 +58,8 @@ function failed(err) {
     text = err;
   }
 
-  $("#errors .error-content").text(text);
-  $("#errors").show();
+  $('#errors .error-content').text(text);
+  $('#errors').show();
   $('#deployment-modal').modal('close');
 
   if (err.detail) {
@@ -75,17 +75,17 @@ function loadLatestRelease() {
     url: '/api/github/releases/latest',
   })
   .then(function(release) {
-    $('#latest-release').text(release.tag_name);
-    $('#tarball-input').val(release.tarball_url);
-    $('#version-input').val(release.tag_name);
-    $('#latest-release-notes').html('Latest ' + (release.prerelease ? 'prerelease' : 'stable release') + ' of Talk is <a href="' + release.html_url + '" target="_blank">' + release.tag_name + '</a>');
+    $('[data-template-tag="latest-release"]').text(release.tag_name);
+    $('[name="tarballUrl"]').val(release.tarball_url);
+    $('[name="version"]').val(release.tag_name);
+    $('[data-template-tag="latest-release-notes"]').html('Latest ' + (release.prerelease ? 'prerelease' : 'stable release') + ' of Talk is <a href="' + release.html_url + '" target="_blank">' + release.tag_name + '</a>');
 
-    $('#tag-spinner').fadeOut(function() {
-      $('#deploy-button-gutter').fadeIn();
+    $('.tag-spinner').fadeOut(function() {
+      $('.deploy-button-gutter').fadeIn();
     });
   })
   .fail(function(err) {
-    failed('Can\'t load the most recent release of Talk. ('+err.status+')');
+    failed('Can\'t load the most recent release of Talk. (' + err.status + ')');
   });
 }
 
@@ -93,10 +93,10 @@ function attachToForm() {
 
   // Attach to the form on tha page so when we submit it, we can actually do
   // some rendering.
-  $('form').validate({
+  $('#start-installation form').validate({
     errorClass: 'invalid',
     errorPlacement: function(error, element) {
-      element.next("label").attr("data-error", error.contents().text());
+      element.next('label').attr('data-error', error.contents().text());
     },
     submitHandler: function(form, e) {
 
@@ -113,8 +113,8 @@ function attachToForm() {
 }
 
 function startDeploy(data) {
-  $('#deploy-button').prop('disabled', true);
-  $('#deploy-button').addClass('disabled');
+  $('.deploy-button').prop('disabled', true);
+  $('.deploy-button').addClass('disabled');
 
   $('#deployment-modal').modal('open');
 
@@ -146,11 +146,11 @@ function deploy(data) {
 }
 
 function tailDeploymentProgress(appSetup) {
-  var pre = $("#deploy-progress pre");
+  var pre = $('#deploy-progress pre');
   var buildOutput = '';
 
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", appSetup.build.output_stream_url, true);
+  xhr.open('GET', appSetup.build.output_stream_url, true);
   xhr.onprogress = function() {
     if (buildOutput === '') {
       pre.show();
@@ -205,16 +205,16 @@ function pollDeployment(appSetup, buildStarted) {
             err.detail = ouputStream;
 
             failed(err);
-          }).fail(function(nerr) {
+          })
+          .fail(function(nerr) {
             console.error(nerr);
 
             failed(err);
-          })
+          });
         } else {
           return failed(err);
         }
       }
-
     })
     .fail(function(err) {
       updateProgress('Deployment failed', true);
@@ -321,7 +321,7 @@ function finish(options) {
     if (Store.get('email-setup')) {
       $('#finish-installation-post').show();
     } else {
-      $('#activate-email-button').on('click', function(e) {
+      $('#activate-email-button').on('click', function() {
 
         // Mark that the email was setup.
         Store.set('email-setup', true);
@@ -332,6 +332,204 @@ function finish(options) {
   });
 }
 
+function finishUpgrade(buildStatus) {
+  console.log(buildStatus);
+
+  updateProgress('Upgrade success');
+
+  setTimeout(function() {
+    $('#deployment-modal').modal('close');
+  }, 1000);
+
+  $('#start-upgrade').fadeOut(function() {
+    $('#upgrade-complete').fadeIn();
+  });
+}
+
+function tailUpgradeProgress(build) {
+  var pre = $('#deploy-progress pre');
+  var buildOutput = '';
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', build.output_stream_url, true);
+  xhr.onprogress = function() {
+    if (buildOutput === '') {
+      pre.show();
+
+      updateProgress('Upgrade in progress');
+    }
+
+    buildOutput += xhr.responseText;
+
+    pre.text(buildOutput);
+    pre.scrollTop(pre.prop('scrollHeight'));
+  };
+  xhr.send();
+}
+
+function pollUpgrade(build, buildStarted) {
+  return function() {
+    $.ajax({
+      method: 'GET',
+      dataType: 'json',
+      contentType: 'application/json',
+      url: '/api/heroku/apps/builds?app_name=' + build.app.id + '&build_id=' + build.id
+    }).done(function(buildStatus) {
+
+      // Once the build is non null and the build hasn't been marked as started
+      // then tail the deployment progress.
+      if (!buildStarted && buildStatus) {
+        tailUpgradeProgress(buildStatus);
+
+        buildStarted = true;
+      }
+
+      if (buildStatus.status === 'pending') {
+
+        setTimeout(pollUpgrade(buildStatus, buildStarted), 3000);
+
+      } else if (buildStatus.status === 'succeeded') {
+        finishUpgrade(buildStatus);
+      } else {
+        updateProgress('Upgrade failed', true);
+
+        var err = new Error(buildStatus.failure_message);
+
+        if (buildStatus.failure_message === 'build failed') {
+          $.ajax({
+            method: 'GET',
+            url: buildStatus.output_stream_url
+          }).done(function(ouputStream) {
+
+            err.detail = ouputStream;
+
+            failed(err);
+          })
+          .fail(function(nerr) {
+            console.error(nerr);
+
+            failed(err);
+          });
+        } else {
+          return failed(err);
+        }
+      }
+    })
+    .fail(function(err) {
+      updateProgress('Upgrade failed', true);
+
+      failed(err);
+    });
+  };
+}
+
+function getHerokuApps(cb) {
+  $.ajax({
+    method: 'GET',
+    url: '/api/heroku/apps',
+    dataType: 'json',
+    contentType: 'application/json',
+  }).done(function(apps) {
+    cb(null, apps);
+  })
+  .fail(function(err) {
+    cb(err);
+  });
+}
+
+function upgrade(data) {
+  $.ajax({
+    method: 'POST',
+    url: '/api/heroku/apps/builds',
+    data: data
+  }).done(function(build) {
+
+    updateProgress('Upgrade started');
+
+    console.log('Upgrade started with id ' + build.id);
+
+    setTimeout(pollUpgrade(build, false), 3000);
+  })
+  .fail(function(err) {
+    updateProgress('Upgrade failed', true);
+
+    failed(err);
+  });
+}
+
+function startUpgrade(data) {
+  $('.deploy-button').prop('disabled', true);
+  $('.deploy-button').addClass('disabled');
+
+  $('#deployment-modal').modal('open');
+
+  $('#deploy-progress').show();
+
+  updateProgress('Starting upgrade');
+
+  upgrade(data);
+}
+
+function startUpgradeDeployment() {
+  getHerokuApps(function(err, apps) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    $('#heroku-apps-autocomplete').autocomplete({
+      data: apps.reduce(function(acc, app) {
+        acc[app.name] = null;
+
+        return acc;
+      }, {}),
+      limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+    });
+
+    $('form').validate({
+      errorClass: 'invalid',
+      errorPlacement: function(error, element) {
+        element.next('label').attr('data-error', error.contents().text());
+      },
+      submitHandler: function(form, e) {
+
+        // Prevent the form from submitting.
+        e.preventDefault();
+
+        // Serialize the data.
+        var data = $(form).serialize();
+
+        // Start the deploy.
+        startUpgrade(data);
+      }
+    });
+  });
+}
+
+function startSelectionProcess() {
+  $('#create-new-deployment-btn').on('click', function() {
+    $('#select-mode').fadeOut(function() {
+      var installation = Store.get('installation');
+      if (installation) {
+        finish(installation);
+      } else {
+        $('#start-installation').fadeIn();
+
+        // Attach to the form's state.
+        attachToForm();
+      }
+    });
+  });
+
+  $('#upgrade-existing-deployment-btn').on('click', function() {
+    $('#select-mode').fadeOut(function() {
+      $('#start-upgrade').fadeIn();
+
+      startUpgradeDeployment();
+    });
+  });
+}
+
 $(document).ready(function() {
 
   // Enable the sideNav for the button collapse button.
@@ -339,19 +537,13 @@ $(document).ready(function() {
   $('.modal').modal({
     dismissible: false
   });
+  $('select').material_select();
 
   // If the form is on the page, then we are logged in.
   if ($('form')) {
+    startSelectionProcess();
 
     // Load the latest release.
     loadLatestRelease();
-
-    // Attach to the form's state.
-    attachToForm();
-  }
-
-  var installation = Store.get('installation');
-  if (installation) {
-    finish(installation);
   }
 });

@@ -62,6 +62,42 @@ router.get('/app-setups/:app_setup_id', (req, res, next) => {
     });
 });
 
+router.post('/apps/builds', (req, res, next) => {
+  req.user.client
+    .post(`/apps/${req.body.app_name}/builds`, {
+      body: {
+        source_blob: {
+
+          // This will select the passed in tarball url as the source for the
+          // build.
+          url: req.body.tarballUrl,
+
+          // This will tag the release with the version.
+          version: req.body.version
+        }
+      }
+    })
+    .then((build) => {
+
+      // Send back the created build to the frontend.
+      res.status(201).json(build);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+router.get('/apps/builds', (req, res, next) => {
+  req.user.client
+    .get(`/apps/${req.query.app_name}/builds/${req.query.build_id}`)
+    .then((status) => {
+      res.json(status);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 router.patch('/apps/:app_name/config-vars', (req, res, next) => {
   req.user.client
     .patch(`/apps/${req.params.app_name}/config-vars`, {body: req.body})
@@ -82,6 +118,18 @@ router.get('/apps/:app_name/addons', (req, res, next) => {
 
       // Send back the addons.
       res.json(addons);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+router.get('/apps', (req, res, next) => {
+  req.user.client
+    .get('/apps')
+    .then((apps) => {
+
+      res.status(200).json(apps);
     })
     .catch((err) => {
       next(err);

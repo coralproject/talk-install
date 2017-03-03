@@ -1,0 +1,11 @@
+{
+    "env": {
+        "browser": true,
+        "jquery": true
+    },
+    "extends": "../.eslintrc.json",
+    "rules": {
+      "no-var": [0],
+      "prefer-template": [0]
+    }
+}
