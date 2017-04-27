@@ -77,7 +77,7 @@ app.get('/auth/heroku', passport.authenticate('heroku'));
 app.get('/auth/heroku/callback', passport.authenticate('heroku', {
   failureRedirect: '/',
   successRedirect: '/',
-  failureFlash: true
+  failureFlash: {type: 'error'}
 }));
 
 // Create the new renderer that overrides the link generation.
