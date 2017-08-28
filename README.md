@@ -1,3 +1,5 @@
+# [DEPRECATED] Use "Deploy to Heroku" button on https://github.com/coralproject/talk
+
 # talk-install
 
 A web app that a hopeful Coral Project installation administrator can use to install the latest release of Talk on a Heroku Dyno in their Heroku Account.
